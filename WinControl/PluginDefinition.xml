@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Assembly>WinControl.dll</Assembly>
+  <Uuid>6246E954-1496-4B01-8B1F-629DE71A065C</Uuid>
+  <Name>Operation System Shutdown Plugin</Name>
+  <Permissions>
+
+  </Permissions>
+</PluginDefinition>

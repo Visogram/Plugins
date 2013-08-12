@@ -1,0 +1,2036 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Visogram.Framework</name>
+    </assembly>
+    <members>
+        <member name="M:Visogram.Framework.ModuleBase.OnErrorEncountered(System.Exception)">
+            <summary>
+            Should be called by the implementation in case of any fatal errors during execution.
+            Stops the instance depending on the value of <c>HaltOnError</c>.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.SubscribeForSignalChanges(System.EventHandler{Visogram.Framework.Collections.ModuleSignalsChangedEventArgs})">
+            <summary>
+            Notifies the <paramref name="handler"/> when changes to this instance's input or output signals occur.
+            </summary>
+            <seealso cref="M:Visogram.Framework.ModuleBase.UnsubscribeFromSignalChanges(System.EventHandler{Visogram.Framework.Collections.ModuleSignalsChangedEventArgs})"/>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.UnsubscribeFromSignalChanges(System.EventHandler{Visogram.Framework.Collections.ModuleSignalsChangedEventArgs})">
+            <summary>
+            Stops notifications from being sent to the <paramref name="handler"/> when inputs or outputs change.
+            </summary>
+            <seealso cref="M:Visogram.Framework.ModuleBase.SubscribeForSignalChanges(System.EventHandler{Visogram.Framework.Collections.ModuleSignalsChangedEventArgs})"/>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.Enable">
+            <summary>
+            Tries to start the instance by setting <c>HasError</c> to <value>false</value> and
+            <c>Running</c> to <value>true</value> and subsequently calling <c>OnStart</c>
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.Disable">
+            <summary>
+            Tries to stop the instance by calling <c>OnStop()</c> and sets <c>Running</c> to <value>false</value> regardless of the success in doing so.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.SetProperty``1(System.String,``0@,``0)">
+            <summary>
+            Helper function for setting a property to a new value and subseqeuently notifying people a change happened.
+            Checks property and value for equality and returns false without any action if equality is detected.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name"></param>
+            <param name="property"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.OnEnabled">
+            <summary>
+            Called by Start()
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.OnDisabled">
+            <summary>
+            Called by Stop()
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.GenerateNewUuid">
+            <summary>
+            Generates a new unique id for this instance. Is used after loading a persisted state to ensure uniqueness despite possible duplicates.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.SubscribeForPropertyChanges(System.EventHandler{Visogram.Framework.Api.PropertyChangedEventArgs})">
+            <summary>
+            Register only for property changes fired by this module
+            </summary>
+            <param name="eventHandler">Event handler</param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.UnsubscribeFromPropertyChanges(System.EventHandler{Visogram.Framework.Api.PropertyChangedEventArgs})">
+            <summary>
+            Stops the given <paramref name="eventHandler"/> from receiving notifications.
+            </summary>
+            <param name="eventHandler">Event handler</param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.RetrieveSignalSource(System.String)">
+            <summary>
+            Retrieves an output with the given <paramref name="uuid"/>
+            </summary>
+            <param name="uuid">The uuid to look for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.RetrieveSignalSink(System.String)">
+            <summary>
+            Retrieves an input with the given <paramref name="uuid"/>
+            </summary>
+            <param name="uuid">The uuid to look for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.RetrieveSignal(System.String)">
+            <summary>
+            Retrieves an input or output with the given <paramref name="uuid"/>
+            </summary>
+            <param name="uuid">The uuid to look for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.CreateFromDescription(System.Xml.Linq.XElement)">
+            <summary>
+            Creates an instance of a module based on the root node of the persisted instance.
+            </summary>
+            <param name="e">The XML node</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.ReadFromElement(System.Xml.Linq.XElement,Visogram.Framework.PersistenceWarningCollection)">
+            <summary>
+            Restores a saved state of this instance from an XML node.
+            </summary>
+            <param name="e">The XML node containing the persisted state</param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.OnModuleLoadedFromStore">
+            <summary>
+            Called after the Module was restored from a persistent state
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Saves the current state of this instance to a XML stream.
+            By default serializes all signals plus Properties and Fields marked with <c>VSPersistentAttribute</c>
+            Override this in a derived class if you need custom serialization done.
+            </summary>
+            <param name="w">The writer to save to</param>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.ToString">
+            <summary>
+            Returns the module type in a prettified format and the instance's uuid.
+            </summary>
+            <returns>A string identifying this instance. <example><value>"VSSignalFramework.ModuleBase (7817b7d26f214ed1ba4184ae265e15fe)"</value></example></returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.Clone">
+            <summary>
+            Calls <see cref="M:Visogram.Framework.ModuleBase.Clone(System.Boolean)"/> with value <value>true</value>
+            </summary>
+            <returns>The cloned module instance</returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.Clone(System.Boolean)">
+            <summary>
+            Creates a clone of this module instance. This is done by first serializing the instance to memory and deserializing it afterwards.
+            Clones the entire object tree including eventual instances held by a Container.
+            </summary>
+            <param name="generateNewUuids">Whether to generate new uuids for instances and signals of the clone</param>
+            <returns>The cloned module instance</returns>
+        </member>
+        <member name="M:Visogram.Framework.ModuleBase.OnModuleCloned(Visogram.Framework.ModuleBase)">
+            <summary>
+            Called on the instance clone after it was created completely but before generating new uuids.
+            Does not do anything by default.
+            </summary>
+            <param name="original">The instance this clone was made from</param>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Icon">
+            <summary>
+            Ensures unlimited lifetime needed for remoting to work as expected.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.ErrorSignal">
+            <summary>
+            Returns the default error signal for this module.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.QueuedForStart">
+            <summary>
+            Used by the loading code to start plugins that were previously running
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Disabled">
+            <summary>
+            Gets or sets the current state of execution.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.HaltOnError">
+            <summary>
+            Sets the behaviour of the error-catching mechanism. If an error is encountered and this is set to <value>true</value>, <c>Stop</c> is called.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.ExternalApi">
+            <summary>
+            Exposes this module to the external API. When <value>true</value>, Properties, Inputs and Outputs become externally accessible.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.HasError">
+            <summary>
+            Indicates whether and error was caught during the execution of this module.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Inputs">
+            <summary>
+            The available inputs of this instance.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Outputs">
+            <summary>
+            The available outputs of this instance.
+            </summary>
+        </member>
+        <member name="E:Visogram.Framework.ModuleBase.UnhandledException">
+            <summary>
+            Fires when an exception is caught inside this module, but no listener was connected to the <c>ErrorSignal</c>
+            </summary>
+        </member>
+        <member name="E:Visogram.Framework.ModuleBase.SignalsChanged">
+            <summary>
+            Is fired when inputs or outputs are added or removed to or from this instance.
+            Can and will be overwritten to support propagation of notificatinos important for Containers.
+            Containers report signal changes of children because they are important to the Container's observer.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Name">
+            <summary>
+            The name of this instance. Unique inside the parent Container.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.Uuid">
+            <summary>
+            A globally unique identifier for this module instance.
+            Changes every time the instance is loaded from a persistent state in order to ensure uniqueness when
+            the same file is loaded multiple times into different containers.
+            </summary>
+        </member>
+        <member name="E:Visogram.Framework.ModuleBase.PropertyChanged">
+            <summary>
+            Is fired when a property of this module changes.
+            Can and will be overwritten to support propagation of property changes important for Containers.
+            Containers report property changes of children if they are of interest to the Container's observer.
+            This is for example true for the properties "Running", "Name" and "HasError".
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.UniqueName">
+            <summary>
+            This property is used by the parent module (usually a Container) to ensure uniqueness of the instance name.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleBase.IsRemovable">
+            <summary>
+            Prevents this module from being removable from its Container by the API (it is still removable by code).
+            </summary>
+        </member>
+        <member name="M:Visogram.Modules.OneToOneModuleBase`2.OutputRequestReceived(System.Object,Visogram.Framework.SignalRequestEventArgs{`1})">
+            <summary>
+            Override this method to implement "request-style" signalling. By default, this method is empty, so you don't need to call base.OutputRequestReceived.
+            </summary>
+            <remarks>You don't need to catch Exceptions in your implementation of this method, as they are catched by the base class <c>OneToOneModuleBase</c></remarks>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Visogram.Modules.ConverterBase`2.GetOutputForInputObject(Visogram.Framework.SignalEventArgs{`0})">
+            <summary>
+            Implement this function in a subclass to provide input/output conversion.
+            Exceptions thrown in this function are catched by the VSConverterBase and emit an Error signal.
+            Depending on the setting of <see cref="!:StopOnError"/>, the module is automatically halted or continues execution.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Modules.ConverterBase`2.OutputRequestReceived(System.Object,Visogram.Framework.SignalRequestEventArgs{`1})">
+            <summary>
+            <c>OutputRequestReceived</c> in <c>ConverterBase</c> calls RequestSignal on the converter's default input and uses the converter's
+            conversion implementation <c>GetOutputForInputObject</c> to generate a corresponding output signal which is then returned.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Visogram.Framework.ContainerInputSignal`1.#ctor(Visogram.Framework.ISignalSource,Visogram.Framework.ISignalSink)">
+            <summary>
+            Creates a ContainerInputSignal while at the same time connecting the ContainerInputSignal's input to the
+            <paramref name="source"/> provided and the 'internal' output to the sink provided.
+            </summary>
+            <param name="source"></param>
+            <param name="sink"></param>
+        </member>
+        <member name="M:Visogram.Framework.ContainerOutputSignal`1.#ctor(Visogram.Framework.ISignalSource,Visogram.Framework.ISignalSink)">
+            <summary>
+            Creates a ContainerOutputSignal while at the same time connecting the ContainerOutputSignal's 'internal' input to the
+            <paramref name="source"/> provided and the output to the 'external' sink provided.
+            </summary>
+            <param name="source"></param>
+            <param name="sink"></param>
+        </member>
+        <member name="P:Visogram.Framework.ISignalBase.RetainLastDataObject">
+            <summary>
+            Gets or sets whether this signal should save the last object that was passed through it.
+            <see cref="!:LastDataObject"/>
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.SignalBase`1.HandleEmitSignal(System.Object)">
+            <summary>
+            This function gets called by <c>ApiEmit</c> to handle the object the user wants to emit.
+            </summary>
+            <param name="data">The signal that should be emitted</param>
+            <returns></returns>
+        </member>
+        <member name="P:Visogram.Framework.SignalBase`1.RetainLastDataObject">
+            <summary>
+            Gets or sets whether this signal should save the last object that was passed through it.
+            <see cref="!:LastDataObject"/>
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalBase`1.RetainedDataObject">
+            <summary>
+            Returns the last object that was sent through this signal connector
+            <seealso cref="P:Visogram.Framework.SignalBase`1.RetainLastDataObject"/>
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalBase`1.DataType">
+            <summary>
+            Returns the (base)type of objects this connector can handle
+            <seealso cref="P:Visogram.Framework.SignalBase`1.TypeName"/>
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalBase`1.TypeName">
+            <summary>
+            Returns the full name of the (base)type of objects this connector can handle 
+            (Type.FullName only, does not include version or assembly information)
+            <seealso cref="P:Visogram.Framework.SignalBase`1.DataType"/>
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalBase`1.Uuid">
+            <summary>
+            Returns a Globally Unique Identifier identifying this connector
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.SignalSource`1.OnRequestReceived(System.Object,Visogram.Framework.SignalRequestEventArgs)">
+            <summary>
+            
+            </summary>
+            <remarks>This needs to be public in order for remoting to be able to call it</remarks>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Visogram.Framework.SignalSource`1.EmitExclusiveSignal(`0,Visogram.Framework.ISignalSink)">
+            <summary>
+            Emits a signal only to a specific signal sink
+            </summary>
+            <param name="data"></param>
+            <param name="sink"></param>
+        </member>
+        <member name="M:Visogram.Framework.Container.OnPropertyChanged(System.Object,Visogram.Framework.Api.PropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>This needs to be public in order to be able to have it called from the remote side</remarks>
+        </member>
+        <member name="M:Visogram.Framework.Container.OnModulePropertyChanged(System.Object,Visogram.Framework.Api.PropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>This needs to be public in order to be able to have it called from the remote side</remarks>
+        </member>
+        <member name="M:Visogram.Framework.Container.Clear">
+            <summary>
+            Deletes all instances from this container
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Container.AddModulesFromContainer(Visogram.Framework.Container)">
+            <summary>
+            Adds all modules found in otherContainer to this container.
+            Be sure to dispose of the otherContainer afterwards, don't use it anymore!
+            </summary>
+            <param name="otherContainer"></param>
+        </member>
+        <member name="M:Visogram.Framework.Container.AddModule(Visogram.Framework.ModuleBase)">
+            <summary>
+            Adds a new module to the collection using an auto-generated identifier
+            using the format "MyModuleName" for the first module, "MyModuleName1"
+            for the second and so forth.
+            </summary>
+            <remarks>This method is not threadsafe. Do not call this method from multiple threads, race conditions may cause
+            the same identifier getting used twice resulting in an Exception plus the underlying list is not threadsafe in itself.</remarks>
+            <param name="module"></param>
+            <returns>The identifier that was used </returns>
+        </member>
+        <member name="M:Visogram.Framework.Container.GetUniqueName(System.String)">
+            <summary>
+            Appends an increasing number to the given <paramref name="name"/> until an unoccupied name is found.
+            </summary>
+            <remarks>This method is not threadsafe and thus should only be called inside a lock to instances</remarks>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Container.AddModule(Visogram.Framework.ModuleBase,System.String)">
+            <summary>
+            Adds a new module using the given <paramref name="identifier"/>
+            </summary>
+            <remarks>The given identifier must not necessarily be used as the real identifier. If the collection
+            already contains a module by that name, a number is appended to the name to ensure uniqueness.
+            This method is not threadsafe. Do not call this method from multiple threads, race conditions may cause
+            the same identifier getting used twice resulting in an Exception plus the underlying list is not threadsafe in itself.</remarks>
+            <param name="module"></param>
+            <param name="identifier"></param>
+        </member>
+        <member name="M:Visogram.Framework.Container.OnModuleAdded(Visogram.Framework.ModuleBase,System.Boolean)">
+            <summary>
+            Called when module is added
+            </summary>
+        </member>
+        <member name="E:Visogram.Framework.Container.PropertyChanged">
+            <summary>
+            
+            </summary>
+            <remarks>Not threadsafe.</remarks>
+        </member>
+        <member name="T:Visogram.Framework.Utils.DictionaryWithNamedElements`1">
+            <summary>
+            
+            </summary>
+            <remarks>Class is not threadsafe</remarks>
+            <typeparam name="TElementType"></typeparam>
+        </member>
+        <member name="M:Visogram.Modules.Ui.UiModuleBase.GetUISurrogate">
+            <summary>
+            Override this and provide your own subclass of <c>UIModuleBaseSurrogate</c> in order to pass
+            data from here to your JavaScript implementation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Visogram.Framework.Api.ITypeTranslator">
+            <summary>
+            Types implementing this interface need to have one parameterless constructor!
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.SignalSink`1.OnSignalReceived(System.Object,Visogram.Framework.SignalEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>This needs to be public in order for remoting to work</remarks>
+        </member>
+        <member name="M:Visogram.Modules.Ui.UiElement.GetUISurrogate">
+            <summary>
+            Override this and provide your own subclass of <c>UiElementSurrogate</c> in order to pass
+            data from here to your JavaScript implementation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Api.ApiCommandCollection.HandleUnknownCommand(System.String,Visogram.Framework.Api.ApiCall)">
+            <summary>
+            This function is the default "unkown command" handler and throws an exception by default.
+            If a subclass wants to handle unkown commands it's own way, for example to provide
+            dynamic behaviour, it should override this function.
+            </summary>
+            <param name="name"></param>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.Name">
+            <summary>
+            The name of this signal
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.Description">
+            <summary>
+            A summary of this signal's purpose
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.IsRemovable">
+            <summary>
+            This signal is a removable signal used to set or get the value of a property using this input/output
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.IsGeneric">
+            <summary>
+            The type of this signal is determined when inherited or instanciated
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.Overrides">
+            <summary>
+            This signal overrides a signal in a base class with a certain name
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.SupportsRequests">
+            <summary>
+            This input or output sends or answers signal requests
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.SignalInfoAttribute.IsDynamic">
+            <summary>
+            This signal represents a number of dynamic signals from 0 to N
+            </summary>
+        </member>
+        <member name="T:Fantail.Libraries.Syslog.SyslogMessage">
+            <summary>
+            Encapsulates a single syslog message, as received from a remote host.
+            </summary>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogMessage.#ctor(System.Nullable{System.Int32},System.DateTime,System.String,System.String)">
+            <summary>
+            Creates a new instance of the SyslogMessage class.
+            </summary>
+            <param name="priority">Specifies the encoded PRI field, containing the facility and severity values.</param>
+            <param name="timestamp">Specifies the timestamp, if present in the packet.</param>
+            <param name="hostname">Specifies the hostname, if present in the packet.  The hostname can only be present if the timestamp is also present (RFC3164).</param>
+            <param name="message">Specifies the textual content of the message.</param>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogMessage.ToString">
+            <summary>
+            Returns a textual representation of the syslog message, for debugging purposes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.SyslogMessage.Facility">
+            <summary>
+            Returns an integer specifying the facility.  The following are commonly used:
+                  0             kernel messages
+                  1             user-level messages
+                  2             mail system
+                  3             system daemons
+                  4             security/authorization messages (note 1)
+                  5             messages generated internally by syslogd
+                  6             line printer subsystem
+                  7             network news subsystem
+                  8             UUCP subsystem
+                  9             clock daemon (note 2)
+                 10             security/authorization messages (note 1)
+                 11             FTP daemon
+                 12             NTP subsystem
+                 13             log audit (note 1)
+                 14             log alert (note 1)
+                 15             clock daemon (note 2)
+                 16             local use 0  (local0)
+                 17             local use 1  (local1)
+                 18             local use 2  (local2)
+                 19             local use 3  (local3)
+                 20             local use 4  (local4)
+                 21             local use 5  (local5)
+                 22             local use 6  (local6)
+                 23             local use 7  (local7)
+            </summary>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.SyslogMessage.Severity">
+            <summary>
+            Returns an integer number specifying the severity.  The following values are commonly used:
+                  0       Emergency: system is unusable
+                  1       Alert: action must be taken immediately
+                  2       Critical: critical conditions
+                  3       Error: error conditions
+                  4       Warning: warning conditions
+                  5       Notice: normal but significant condition
+                  6       Informational: informational messages
+                  7       Debug: debug-level messages
+            </summary>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.SyslogMessage.Timestamp">
+            <summary>
+            Returns a DateTime specifying the moment at which the event is known to have happened.  As per RFC3164,
+            if the host does not send this value, it may be added by a relay.
+            </summary>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.SyslogMessage.Hostname">
+            <summary>
+            Returns the DNS hostname where the message originated, or the IP address if the hostname is unknown.
+            </summary>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.SyslogMessage.Message">
+            <summary>
+            Returns a string indicating the textual content of the message.
+            </summary>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.MessageReceivedEventArgs.#ctor(Fantail.Libraries.Syslog.SyslogMessage)">
+            <summary>
+            Creates a new instance of the MessageReceivedEventArgs class.
+            </summary>
+        </member>
+        <member name="P:Fantail.Libraries.Syslog.MessageReceivedEventArgs.SyslogMessage">
+            <summary>
+            Returns the syslog message as received from the remote host.
+            </summary>
+        </member>
+        <member name="T:Fantail.Libraries.Syslog.SyslogListener">
+            <summary>
+            Implements a syslog message listener which is RFC3164 compliant.
+            </summary>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogListener.#ctor(System.Net.IPAddress)">
+            <summary>
+            Creates a new instance of the SyslogListener class.
+            </summary>
+            <param name="listenAddress">Specifies the address to listen on.  IPAddress.Any will bind the listener to all available interfaces.</param>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogListener.Start">
+            <summary>
+            Starts listening for syslog packets.
+            </summary>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogListener.DoReceiveData(System.IAsyncResult)">
+            <summary>
+            This internal method processes an async receive as set up by SetupReceive()
+            </summary>
+        </member>
+        <member name="M:Fantail.Libraries.Syslog.SyslogListener.Stop">
+            <summary>
+            Stops listening and reporting syslog message packets.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Plugins.PluginManager.DiscoverPlugin(System.String)">
+            <summary>
+            Tries to load the plugin description located in packagePath and builds a PluginInfo
+            out of the information collected.
+            Additionally to returning the discovered information,
+            it is also appenden to the internal list of available plugins
+            </summary>
+            <param name="packagePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Plugins.PluginSettings.Register(System.Type,System.String,System.Boolean)">
+            <summary>
+            Registers a settings file for the plugin that contains the given <paramref name="pluginType"/>.
+            
+            Settings with the same <paramref name="settingsFileName"/> are shared between all modules
+            in the same plugin as <paramref name="pluginType"/> and are threadsafe.
+            
+            This function is threadsafe.
+            </summary>
+            <example>
+            public static class MyModule : ModuleBase {
+                PluginSettings mySettings = PluginSettings.Register(typeof(MyModule));
+            }
+            </example>
+            <param name="pluginTyp"></param>
+            <param name="settingsFileName"></param>
+            <param name="autoLoad">Calls <c>Load()</c> after registering</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Plugins.PluginSettings.Register(System.Type,System.String)">
+            <summary>
+            Registers a settings file with autoLoad set to <c>true</c> <see cref="M:Visogram.Framework.Plugins.PluginSettings.Register(System.Type,System.String,System.Boolean)"/>
+            </summary>
+            <param name="pluginType"></param>
+            <param name="settingsFileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Plugins.PluginSettings.Register(System.Type)">
+            <summary>
+            Registers a settings file called "PluginSettings.xml" with autoLoad set to <c>true</c> <see cref="M:Visogram.Framework.Plugins.PluginSettings.Register(System.Type,System.String,System.Boolean)"/>
+            </summary>
+            <param name="pluginType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Visogram.Framework.Utils.Endianness">
+            <summary>
+            Endianness of a converter
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.Endianness.LittleEndian">
+            <summary>
+            Little endian - least significant byte first
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.Endianness.BigEndian">
+            <summary>
+            Big endian - most significant byte first
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.EndianBinaryReader">
+            <summary>
+            Equivalent of System.IO.BinaryReader, but with either endianness, depending on
+            the EndianBitConverter it is constructed with. No data is buffered in the
+            reader; the client may seek within the stream at will.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryReader.disposed">
+            <summary>
+            Whether or not this reader has been disposed yet.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryReader.decoder">
+            <summary>
+            Decoder to use for string conversions.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryReader.buffer">
+            <summary>
+            Buffer used for temporary storage before conversion into primitives
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryReader.charBuffer">
+            <summary>
+            Buffer used for temporary storage when reading a single character
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryReader.minBytesPerChar">
+            <summary>
+            Minimum number of bytes used to encode a character
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.#ctor(Visogram.Framework.Utils.EndianBitConverter,System.IO.Stream)">
+            <summary>
+            Equivalent of System.IO.BinaryWriter, but with either endianness, depending on
+            the EndianBitConverter it is constructed with.
+            </summary>
+            <param name="bitConverter">Converter to use when reading data</param>
+            <param name="stream">Stream to read data from</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.#ctor(Visogram.Framework.Utils.EndianBitConverter,System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Constructs a new binary reader with the given bit converter, reading
+            to the given stream, using the given encoding.
+            </summary>
+            <param name="bitConverter">Converter to use when reading data</param>
+            <param name="stream">Stream to read data from</param>
+            <param name="encoding">Encoding to use when reading character data</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Close">
+            <summary>
+            Closes the reader, including the underlying stream..
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Seek(System.Int32,System.IO.SeekOrigin)">
+            <summary>
+            Seeks within the stream.
+            </summary>
+            <param name="offset">Offset to seek to.</param>
+            <param name="origin">Origin of seek operation.</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadByte">
+            <summary>
+            Reads a single byte from the stream.
+            </summary>
+            <returns>The byte read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadSByte">
+            <summary>
+            Reads a single signed byte from the stream.
+            </summary>
+            <returns>The byte read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadBoolean">
+            <summary>
+            Reads a boolean from the stream. 1 byte is read.
+            </summary>
+            <returns>The boolean read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadInt16">
+            <summary>
+            Reads a 16-bit signed integer from the stream, using the bit converter
+            for this reader. 2 bytes are read.
+            </summary>
+            <returns>The 16-bit integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadInt32">
+            <summary>
+            Reads a 32-bit signed integer from the stream, using the bit converter
+            for this reader. 4 bytes are read.
+            </summary>
+            <returns>The 32-bit integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadInt64">
+            <summary>
+            Reads a 64-bit signed integer from the stream, using the bit converter
+            for this reader. 8 bytes are read.
+            </summary>
+            <returns>The 64-bit integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadUInt16">
+            <summary>
+            Reads a 16-bit unsigned integer from the stream, using the bit converter
+            for this reader. 2 bytes are read.
+            </summary>
+            <returns>The 16-bit unsigned integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadUInt32">
+            <summary>
+            Reads a 32-bit unsigned integer from the stream, using the bit converter
+            for this reader. 4 bytes are read.
+            </summary>
+            <returns>The 32-bit unsigned integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadUInt64">
+            <summary>
+            Reads a 64-bit unsigned integer from the stream, using the bit converter
+            for this reader. 8 bytes are read.
+            </summary>
+            <returns>The 64-bit unsigned integer read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadSingle">
+            <summary>
+            Reads a single-precision floating-point value from the stream, using the bit converter
+            for this reader. 4 bytes are read.
+            </summary>
+            <returns>The floating point value read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadDouble">
+            <summary>
+            Reads a double-precision floating-point value from the stream, using the bit converter
+            for this reader. 8 bytes are read.
+            </summary>
+            <returns>The floating point value read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadDecimal">
+            <summary>
+            Reads a decimal value from the stream, using the bit converter
+            for this reader. 16 bytes are read.
+            </summary>
+            <returns>The decimal value read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Read">
+            <summary>
+            Reads a single character from the stream, using the character encoding for
+            this reader. If no characters have been fully read by the time the stream ends,
+            -1 is returned.
+            </summary>
+            <returns>The character read, or -1 for end of stream.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Read(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads the specified number of characters into the given buffer, starting at
+            the given index.
+            </summary>
+            <param name="data">The buffer to copy data into</param>
+            <param name="index">The first index to copy data into</param>
+            <param name="count">The number of characters to read</param>
+            <returns>The number of characters actually read. This will only be less than
+            the requested number of characters if the end of the stream is reached.
+            </returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads the specified number of bytes into the given buffer, starting at
+            the given index.
+            </summary>
+            <param name="buffer">The buffer to copy data into</param>
+            <param name="index">The first index to copy data into</param>
+            <param name="count">The number of bytes to read</param>
+            <returns>The number of bytes actually read. This will only be less than
+            the requested number of bytes if the end of the stream is reached.
+            </returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadBytes(System.Int32)">
+            <summary>
+            Reads the specified number of bytes, returning them in a new byte array.
+            If not enough bytes are available before the end of the stream, this
+            method will return what is available.
+            </summary>
+            <param name="count">The number of bytes to read</param>
+            <returns>The bytes read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadBytesOrThrow(System.Int32)">
+            <summary>
+            Reads the specified number of bytes, returning them in a new byte array.
+            If not enough bytes are available before the end of the stream, this
+            method will throw an IOException.
+            </summary>
+            <param name="count">The number of bytes to read</param>
+            <returns>The bytes read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Read7BitEncodedInt">
+            <summary>
+            Reads a 7-bit encoded integer from the stream. This is stored with the least significant
+            information first, with 7 bits of information per byte of value, and the top
+            bit as a continuation flag. This method is not affected by the endianness
+            of the bit converter.
+            </summary>
+            <returns>The 7-bit encoded integer read from the stream.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadBigEndian7BitEncodedInt">
+            <summary>
+            Reads a 7-bit encoded integer from the stream. This is stored with the most significant
+            information first, with 7 bits of information per byte of value, and the top
+            bit as a continuation flag. This method is not affected by the endianness
+            of the bit converter.
+            </summary>
+            <returns>The 7-bit encoded integer read from the stream.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadString">
+            <summary>
+            Reads a length-prefixed string from the stream, using the encoding for this reader.
+            A 7-bit encoded integer is first read, which specifies the number of bytes 
+            to read from the stream. These bytes are then converted into a string with
+            the encoding for this reader.
+            </summary>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.CheckDisposed">
+            <summary>
+            Checks whether or not the reader has been disposed, throwing an exception if so.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.ReadInternal(System.Byte[],System.Int32)">
+            <summary>
+            Reads the given number of bytes from the stream, throwing an exception
+            if they can't all be read.
+            </summary>
+            <param name="data">Buffer to read into</param>
+            <param name="size">Number of bytes to read</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.TryReadInternal(System.Byte[],System.Int32)">
+            <summary>
+            Reads the given number of bytes from the stream if possible, returning
+            the number of bytes actually read, which may be less than requested if
+            (and only if) the end of the stream is reached.
+            </summary>
+            <param name="data">Buffer to read into</param>
+            <param name="size">Number of bytes to read</param>
+            <returns>Number of bytes actually read</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryReader.Dispose">
+            <summary>
+            Disposes of the underlying stream.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryReader.BitConverter">
+            <summary>
+            The bit converter used to read values from the stream
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryReader.Encoding">
+            <summary>
+            The encoding used to read strings
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryReader.BaseStream">
+            <summary>
+            Gets the underlying stream of the EndianBinaryReader.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.PropertyAttribute.ReadOnly">
+            <summary>
+            Normally, this value is determined by the Property you set this attribute on.
+            If it has a setter (is writeable), it is set to <value>false</value>, otherwise it is set to <value>true</value>.
+            But you can override the value by specifying it in this Attribute's constructor
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Global">
+            <summary>
+            Have to be set by the hosting environment (Visogram.Host in most cases)
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.EndianBinaryWriter">
+            <summary>
+            Equivalent of System.IO.BinaryWriter, but with either endianness, depending on
+            the EndianBitConverter it is constructed with.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryWriter.disposed">
+            <summary>
+            Whether or not this writer has been disposed yet.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryWriter.buffer">
+            <summary>
+            Buffer used for temporary storage during conversion from primitives
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBinaryWriter.charBuffer">
+            <summary>
+            Buffer used for Write(char)
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.#ctor(Visogram.Framework.Utils.EndianBitConverter,System.IO.Stream)">
+            <summary>
+            Constructs a new binary writer with the given bit converter, writing
+            to the given stream, using UTF-8 encoding.
+            </summary>
+            <param name="bitConverter">Converter to use when writing data</param>
+            <param name="stream">Stream to write data to</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.#ctor(Visogram.Framework.Utils.EndianBitConverter,System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Constructs a new binary writer with the given bit converter, writing
+            to the given stream, using the given encoding.
+            </summary>
+            <param name="bitConverter">Converter to use when writing data</param>
+            <param name="stream">Stream to write data to</param>
+            <param name="encoding">Encoding to use when writing character data</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Close">
+            <summary>
+            Closes the writer, including the underlying stream.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Flush">
+            <summary>
+            Flushes the underlying stream.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Seek(System.Int32,System.IO.SeekOrigin)">
+            <summary>
+            Seeks within the stream.
+            </summary>
+            <param name="offset">Offset to seek to.</param>
+            <param name="origin">Origin of seek operation.</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Boolean)">
+            <summary>
+            Writes a boolean value to the stream. 1 byte is written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Int16)">
+            <summary>
+            Writes a 16-bit signed integer to the stream, using the bit converter
+            for this writer. 2 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Int32)">
+            <summary>
+            Writes a 32-bit signed integer to the stream, using the bit converter
+            for this writer. 4 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Int64)">
+            <summary>
+            Writes a 64-bit signed integer to the stream, using the bit converter
+            for this writer. 8 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.UInt16)">
+            <summary>
+            Writes a 16-bit unsigned integer to the stream, using the bit converter
+            for this writer. 2 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.UInt32)">
+            <summary>
+            Writes a 32-bit unsigned integer to the stream, using the bit converter
+            for this writer. 4 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.UInt64)">
+            <summary>
+            Writes a 64-bit unsigned integer to the stream, using the bit converter
+            for this writer. 8 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Single)">
+            <summary>
+            Writes a single-precision floating-point value to the stream, using the bit converter
+            for this writer. 4 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Double)">
+            <summary>
+            Writes a double-precision floating-point value to the stream, using the bit converter
+            for this writer. 8 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Decimal)">
+            <summary>
+            Writes a decimal value to the stream, using the bit converter for this writer.
+            16 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Byte)">
+            <summary>
+            Writes a signed byte to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.SByte)">
+            <summary>
+            Writes an unsigned byte to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Byte[])">
+            <summary>
+            Writes an array of bytes to the stream.
+            </summary>
+            <param name="value">The values to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes a portion of an array of bytes to the stream.
+            </summary>
+            <param name="value">An array containing the bytes to write</param>
+            <param name="offset">The index of the first byte to write within the array</param>
+            <param name="count">The number of bytes to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Char)">
+            <summary>
+            Writes a single character to the stream, using the encoding for this writer.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.Char[])">
+            <summary>
+            Writes an array of characters to the stream, using the encoding for this writer.
+            </summary>
+            <param name="value">An array containing the characters to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write(System.String)">
+            <summary>
+            Writes a string to the stream, using the encoding for this writer.
+            </summary>
+            <param name="value">The value to write. Must not be null.</param>
+            <exception cref="T:System.ArgumentNullException">value is null</exception>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Write7BitEncodedInt(System.Int32)">
+            <summary>
+            Writes a 7-bit encoded integer from the stream. This is stored with the least significant
+            information first, with 7 bits of information per byte of value, and the top
+            bit as a continuation flag.
+            </summary>
+            <param name="value">The 7-bit encoded integer to write to the stream</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.CheckDisposed">
+            <summary>
+            Checks whether or not the writer has been disposed, throwing an exception if so.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.WriteInternal(System.Byte[],System.Int32)">
+            <summary>
+            Writes the specified number of bytes from the start of the given byte array,
+            after checking whether or not the writer has been disposed.
+            </summary>
+            <param name="bytes">The array of bytes to write from</param>
+            <param name="length">The number of bytes to write</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBinaryWriter.Dispose">
+            <summary>
+            Disposes of the underlying stream.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryWriter.BitConverter">
+            <summary>
+            The bit converter used to write values to the stream
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryWriter.Encoding">
+            <summary>
+            The encoding used to write strings
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBinaryWriter.BaseStream">
+            <summary>
+            Gets the underlying stream of the EndianBinaryWriter.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.UiResourceManager.RegisterResource(System.Type,Visogram.Framework.IResource)">
+            <summary>
+            Register a custom resource
+            </summary>
+            <param name="owner"></param>
+            <param name="resource"></param>
+        </member>
+        <member name="M:Visogram.Framework.UiResourceManager.RegisterResource(System.Type,System.String,Visogram.Framework.IncludeStyle,System.Int32)">
+            <summary>
+            Register a resource file for an owner.
+            If the owner is contained inside a plugin, <paramref name="resource"/> is relative to the plugin's directory.
+            </summary>
+            <param name="owner"></param>
+            <param name="resource"></param>
+            <param name="includeStyle"></param>
+            <param name="priority"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.UiResourceManager.Register(System.Type,System.String,Visogram.Framework.IncludeStyle,System.Int32)">
+            <summary>
+            Register a resource for an owner.
+            If the owner is contained inside a plugin, <paramref name="resource"/> is relative to the plugin's directory.
+            </summary>
+            <param name="owner"></param>
+            <param name="resource"></param>
+            <param name="includeStyle"></param>
+            <param name="priority"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.UiResourceManager.GetResources(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Returns a list of all the resources registered by the given modules
+            </summary>
+            <param name="modules"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Visogram.Framework.Utils.LittleEndianBitConverter">
+            <summary>
+            Implementation of EndianBitConverter which converts to/from little-endian
+            byte arrays.
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.EndianBitConverter">
+            <summary>
+            Equivalent of System.BitConverter, but with either endianness.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.IsLittleEndian">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+            <remarks>
+            Different computer architectures store data using different byte orders. "Big-endian"
+            means the most significant byte is on the left end of a word. "Little-endian" means the 
+            most significant byte is on the right end of a word.
+            </remarks>
+            <returns>true if this converter is little-endian, false otherwise.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.DoubleToInt64Bits(System.Double)">
+            <summary>
+            Converts the specified double-precision floating point number to a 
+            64-bit signed integer. Note: the endianness of this converter does not
+            affect the returned value.
+            </summary>
+            <param name="value">The number to convert. </param>
+            <returns>A 64-bit signed integer whose value is equivalent to value.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.Int64BitsToDouble(System.Int64)">
+            <summary>
+            Converts the specified 64-bit signed integer to a double-precision 
+            floating point number. Note: the endianness of this converter does not
+            affect the returned value.
+            </summary>
+            <param name="value">The number to convert. </param>
+            <returns>A double-precision floating point number whose value is equivalent to value.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.SingleToInt32Bits(System.Single)">
+            <summary>
+            Converts the specified single-precision floating point number to a 
+            32-bit signed integer. Note: the endianness of this converter does not
+            affect the returned value.
+            </summary>
+            <param name="value">The number to convert. </param>
+            <returns>A 32-bit signed integer whose value is equivalent to value.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.Int32BitsToSingle(System.Int32)">
+            <summary>
+            Converts the specified 32-bit signed integer to a single-precision floating point 
+            number. Note: the endianness of this converter does not
+            affect the returned value.
+            </summary>
+            <param name="value">The number to convert. </param>
+            <returns>A single-precision floating point number whose value is equivalent to value.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToBoolean(System.Byte[],System.Int32)">
+            <summary>
+            Returns a Boolean value converted from one byte at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>true if the byte at startIndex in value is nonzero; otherwise, false.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToChar(System.Byte[],System.Int32)">
+            <summary>
+            Returns a Unicode character converted from two bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A character formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToDouble(System.Byte[],System.Int32)">
+            <summary>
+            Returns a double-precision floating point number converted from eight bytes 
+            at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A double precision floating point number formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToSingle(System.Byte[],System.Int32)">
+            <summary>
+            Returns a single-precision floating point number converted from four bytes 
+            at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A single precision floating point number formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToInt16(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 16-bit signed integer converted from two bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 16-bit signed integer formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToInt32(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 32-bit signed integer converted from four bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 32-bit signed integer formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToInt64(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 64-bit signed integer converted from eight bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 64-bit signed integer formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToUInt16(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 16-bit unsigned integer converted from two bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 16-bit unsigned integer formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToUInt32(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 32-bit unsigned integer converted from four bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 32-bit unsigned integer formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToUInt64(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 64-bit unsigned integer converted from eight bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 64-bit unsigned integer formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CheckByteArgument(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Checks the given argument for validity.
+            </summary>
+            <param name="value">The byte array passed in</param>
+            <param name="startIndex">The start index passed in</param>
+            <param name="bytesRequired">The number of bytes required</param>
+            <exception cref="T:System.ArgumentNullException">value is a null reference</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            startIndex is less than zero or greater than the length of value minus bytesRequired.
+            </exception>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CheckedFromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Checks the arguments for validity before calling FromBytes
+            (which can therefore assume the arguments are valid).
+            </summary>
+            <param name="value">The bytes to convert after checking</param>
+            <param name="startIndex">The index of the first byte to convert</param>
+            <param name="bytesToConvert">The number of bytes to convert</param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.FromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Convert the given number of bytes from the given array, from the given start
+            position, into a long, using the bytes as the least significant part of the long.
+            By the time this is called, the arguments have been checked for validity.
+            </summary>
+            <param name="value">The bytes to convert</param>
+            <param name="startIndex">The index of the first byte to convert</param>
+            <param name="bytesToConvert">The number of bytes to use in the conversion</param>
+            <returns>The converted number</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToString(System.Byte[])">
+            <summary>
+            Returns a String converted from the elements of a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <remarks>All the elements of value are converted.</remarks>
+            <returns>
+            A String of hexadecimal pairs separated by hyphens, where each pair 
+            represents the corresponding element in value; for example, "7F-2C-4A".
+            </returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToString(System.Byte[],System.Int32)">
+            <summary>
+            Returns a String converted from the elements of a byte array starting at a specified array position.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <remarks>The elements from array position startIndex to the end of the array are converted.</remarks>
+            <returns>
+            A String of hexadecimal pairs separated by hyphens, where each pair 
+            represents the corresponding element in value; for example, "7F-2C-4A".
+            </returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToString(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Returns a String converted from a specified number of bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <param name="length">The number of bytes to convert.</param>
+            <remarks>The length elements from array position startIndex are converted.</remarks>
+            <returns>
+            A String of hexadecimal pairs separated by hyphens, where each pair 
+            represents the corresponding element in value; for example, "7F-2C-4A".
+            </returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.ToDecimal(System.Byte[],System.Int32)">
+            <summary>
+            Returns a decimal value converted from sixteen bytes 
+            at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A decimal  formed by sixteen bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Decimal)">
+            <summary>
+            Returns the specified decimal value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 16.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Decimal,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified decimal value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">A character to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Int64,System.Int32)">
+            <summary>
+            Returns an array with the given number of bytes formed
+            from the least significant bytes of the specified value.
+            This is used to implement the other GetBytes methods.
+            </summary>
+            <param name="value">The value to get bytes for</param>
+            <param name="bytes">The number of significant bytes to return</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Boolean)">
+            <summary>
+            Returns the specified Boolean value as an array of bytes.
+            </summary>
+            <param name="value">A Boolean value.</param>
+            <returns>An array of bytes with length 1.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Char)">
+            <summary>
+            Returns the specified Unicode character value as an array of bytes.
+            </summary>
+            <param name="value">A character to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Double)">
+            <summary>
+            Returns the specified double-precision floating point value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Int16)">
+            <summary>
+            Returns the specified 16-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Int32)">
+            <summary>
+            Returns the specified 32-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Int64)">
+            <summary>
+            Returns the specified 64-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.Single)">
+            <summary>
+            Returns the specified single-precision floating point value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.UInt16)">
+            <summary>
+            Returns the specified 16-bit unsigned integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.UInt32)">
+            <summary>
+            Returns the specified 32-bit unsigned integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.GetBytes(System.UInt64)">
+            <summary>
+            Returns the specified 64-bit unsigned integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the given number of bytes from the least-specific
+            end of the specified value into the specified byte array, beginning
+            at the specified index.
+            This is used to implement the other CopyBytes methods.
+            </summary>
+            <param name="value">The value to copy bytes for</param>
+            <param name="bytes">The number of significant bytes to copy</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytesImpl(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the given number of bytes from the least-specific
+            end of the specified value into the specified byte array, beginning
+            at the specified index.
+            This must be implemented in concrete derived classes, but the implementation
+            may assume that the value will fit into the buffer.
+            </summary>
+            <param name="value">The value to copy bytes for</param>
+            <param name="bytes">The number of significant bytes to copy</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Boolean,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified Boolean value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">A Boolean value.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Char,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified Unicode character value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">A character to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Double,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified double-precision floating point value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Int16,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 16-bit signed integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 32-bit signed integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Int64,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 64-bit signed integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.Single,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified single-precision floating point value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.UInt16,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 16-bit unsigned integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.UInt32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 32-bit unsigned integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.CopyBytes(System.UInt64,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 64-bit unsigned integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBitConverter.Endianness">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBitConverter.Little">
+            <summary>
+            Returns a little-endian bit converter instance. The same instance is
+            always returned.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBitConverter.Big">
+            <summary>
+            Returns a big-endian bit converter instance. The same instance is
+            always returned.
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion">
+            <summary>
+            Union used solely for the equivalent of DoubleToInt64Bits and vice versa.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.i">
+            <summary>
+            Int32 version of the value.
+            </summary>
+        </member>
+        <member name="F:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.f">
+            <summary>
+            Single version of the value.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.#ctor(System.Int32)">
+            <summary>
+            Creates an instance representing the given integer.
+            </summary>
+            <param name="i">The integer value of the new instance.</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.#ctor(System.Single)">
+            <summary>
+            Creates an instance representing the given floating point number.
+            </summary>
+            <param name="f">The floating point value of the new instance.</param>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.AsInt32">
+            <summary>
+            Returns the value of the instance as an integer.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Utils.EndianBitConverter.Int32SingleUnion.AsSingle">
+            <summary>
+            Returns the value of the instance as a floating point number.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.LittleEndianBitConverter.IsLittleEndian">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+            <remarks>
+            Different computer architectures store data using different byte orders. "Big-endian"
+            means the most significant byte is on the left end of a word. "Little-endian" means the 
+            most significant byte is on the right end of a word.
+            </remarks>
+            <returns>true if this converter is little-endian, false otherwise.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.LittleEndianBitConverter.CopyBytesImpl(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified number of bytes from value to buffer, starting at index.
+            </summary>
+            <param name="value">The value to copy</param>
+            <param name="bytes">The number of bytes to copy</param>
+            <param name="buffer">The buffer to copy the bytes into</param>
+            <param name="index">The index to start at</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.LittleEndianBitConverter.FromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Returns a value built from the specified number of bytes from the given buffer,
+            starting at index.
+            </summary>
+            <param name="buffer">The data in byte array format</param>
+            <param name="startIndex">The first index to use</param>
+            <param name="bytesToConvert">The number of bytes to use</param>
+            <returns>The value built from the given bytes</returns>
+        </member>
+        <member name="P:Visogram.Framework.Utils.LittleEndianBitConverter.Endianness">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.BigEndianBitConverter">
+            <summary>
+            Implementation of EndianBitConverter which converts to/from big-endian
+            byte arrays.
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.BigEndianBitConverter.IsLittleEndian">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+            <remarks>
+            Different computer architectures store data using different byte orders. "Big-endian"
+            means the most significant byte is on the left end of a word. "Little-endian" means the 
+            most significant byte is on the right end of a word.
+            </remarks>
+            <returns>true if this converter is little-endian, false otherwise.</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.BigEndianBitConverter.CopyBytesImpl(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified number of bytes from value to buffer, starting at index.
+            </summary>
+            <param name="value">The value to copy</param>
+            <param name="bytes">The number of bytes to copy</param>
+            <param name="buffer">The buffer to copy the bytes into</param>
+            <param name="index">The index to start at</param>
+        </member>
+        <member name="M:Visogram.Framework.Utils.BigEndianBitConverter.FromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Returns a value built from the specified number of bytes from the given buffer,
+            starting at index.
+            </summary>
+            <param name="buffer">The data in byte array format</param>
+            <param name="startIndex">The first index to use</param>
+            <param name="bytesToConvert">The number of bytes to use</param>
+            <returns>The value built from the given bytes</returns>
+        </member>
+        <member name="P:Visogram.Framework.Utils.BigEndianBitConverter.Endianness">
+            <summary>
+            Indicates the byte order ("endianess") in which data is converted using this class.
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.SignalRequestEventArgs`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <remarks>This class is not threadsafe</remarks>
+        </member>
+        <member name="P:Visogram.Framework.ModuleAttribute.Group">
+            <summary>
+            The category for the module
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.ModuleAttribute.Name">
+            <summary>
+            Sets the name for the Module
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.SecurityElementHelper">
+            <summary>
+            Code taken from http://blogs.msdn.com/b/shawnfa/archive/2004/02/24/79598.aspx
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.SecurityElementHelper.SecurityElementToXml(System.Security.SecurityElement)">
+            <summary>
+            Convert a security element XML tree into an System.Xml XML tree
+            </summary>
+            <param name="se">security element at the root of the tree</param>
+            <returns>an XML Node at the root of the System.Xml Tree</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.SecurityElementHelper.SecurityElementToXmlInternal(System.Security.SecurityElement,System.Xml.XmlDocument)">
+            <summary>
+            Convert a security element XML tree into an System.Xml XML tree
+            </summary>
+            <param name="se">security element at the root of the tree</param>
+            <param name="doc">XML Document context to create new XML nodes from</param>
+            <returns>an XML Node at the root of the System.Xml Tree</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.SecurityElementHelper.XmlToSecurityElement(System.Xml.XmlNode)">
+            <summary>
+            Convert an XML Element into a SecurityElement
+            </summary>
+            <remarks>
+             Throws an InvalidOperationException if there are nodes that are not
+            of type XmlElement, XmlAttribute or XmlText in the tree.
+            </remarks>
+            <param name="xml">xml element to convert</param>
+            <returns>SecurityElement representation</returns>
+        </member>
+        <member name="M:Visogram.Framework.Utils.SecurityElementHelper.StringToSecurityElement(System.String)">
+            <summary>
+            Convert an XML string to a security element
+            </summary>
+            <param name="xml">string of XML to convert</param>
+            <returns>SecurityElement that the string represents</returns>
+        </member>
+        <member name="T:Visogram.Framework.Properties.Resources">
+            <summary>
+              Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Properties.Resources.ResourceManager">
+            <summary>
+              Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Properties.Resources.Culture">
+            <summary>
+              Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+              Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Properties.Resources.ModuleBaseDescription">
+            <summary>
+              Sucht eine lokalisierte Zeichenfolge, die A module that does something. ähnelt.
+            </summary>
+        </member>
+        <member name="T:StatDescriptive.StatisticalEvaluationResult">
+            <summary>
+            The result class the holds the analysis results
+            </summary>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluationResult.#ctor">
+            <summary>
+            DescriptiveResult default constructor
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Count">
+            <summary>
+            Count
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Sum">
+            <summary>
+            Sum
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Mean">
+            <summary>
+            Arithmatic mean
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.GeometricMean">
+            <summary>
+            Geometric mean
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.HarmonicMean">
+            <summary>
+            Harmonic mean
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Min">
+            <summary>
+            Minimum value
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Max">
+            <summary>
+            Maximum value
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Range">
+            <summary>
+            The range of the values
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Variance">
+            <summary>
+            Sample variance
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.StdDev">
+            <summary>
+            Sample standard deviation
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.IQR">
+            <summary>
+            Interquartile range
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.Median">
+            <summary>
+            Median, or second quartile, or at 50 percentile
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.FirstQuartile">
+            <summary>
+            First quartile, at 25 percentile
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.ThirdQuartile">
+            <summary>
+            Third quartile, at 75 percentile
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.SumOfError">
+            <summary>
+            Sum of Error
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluationResult.SumOfErrorSquare">
+            <summary>
+            The sum of the squares of errors
+            </summary>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluationResult.Percentile(System.Double)">
+            <summary>
+            Percentile
+            </summary>
+            <param name="percent">Pecentile, between 0 to 100</param>
+            <returns>Percentile</returns>
+        </member>
+        <member name="T:StatDescriptive.StatisticalEvaluation">
+            <summary>
+            Descriptive class
+            </summary>
+        </member>
+        <member name="F:StatDescriptive.StatisticalEvaluation.Result">
+            <summary>
+            Descriptive results
+            </summary>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluation.#ctor">
+            <summary>
+            Descriptive analysis default constructor
+            </summary>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluation.#ctor(System.Double[])">
+            <summary>
+            Descriptive analysis constructor
+            </summary>
+            <param name="dataVariable">Data array</param>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluation.Analyze">
+            <summary>
+            Run the analysis to obtain descriptive information of the data
+            </summary>
+        </member>
+        <member name="M:StatDescriptive.StatisticalEvaluation.percentile(System.Double[],System.Double)">
+            <summary>
+            Calculate percentile of a sorted data set
+            </summary>
+            <param name="sortedData"></param>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Visogram.Framework.Collections.OutputSignalCollection.EmitErrorSignal(System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="ex"></param>
+            <returns>Whether there where any listeners receiving the signal</returns>
+        </member>
+        <member name="M:Visogram.Framework.Api.PropertyInfoCollection.SetProperty``1(System.String,``0@,``0)">
+            <summary>
+            Helper function for setting a property to a new value and subseqeuently notifying people a change happened.
+            Checks property and value for equality and returns false without any action if equality is detected.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name"></param>
+            <param name="property"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Visogram.Framework.RestaurationPhase.Last">
+            <summary>
+            This function does not depend on any particular execution time, and is done last
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Api.ApiCall.Advance">
+            <summary>
+            Advance the current parameter counter by one, return the exact same object (not a copy!)
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Api.ApiCall.Reset">
+            <summary>
+            Reset the current command counter to zero
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Api.ApiCall.GetCommand(System.Int32)">
+            <summary>
+            Get the command with an offset relative to the current command index
+            </summary>
+            <param name="relativeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Visogram.Framework.Api.ApiCall.callFlags">
+            <summary>
+            Indicates if the request originates from an external source
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Api.ApiCall.CurrentCommand">
+            <summary>
+            Returns the current parameter
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Api.ApiCall.RemainingCommands">
+            <summary>
+            Returns the number of parameters left, including the current one
+            </summary>
+        </member>
+        <member name="P:Visogram.Framework.Api.ApiCall.HasCommand">
+            <summary>
+            Checks if the number of remaining commands is greater than zero and the current command is not null or emtpy
+            </summary>
+        </member>
+        <member name="M:Visogram.Framework.Utils.UniqueName.Reset">
+            <summary>
+            Signals the unique name it no longer has to be unique because it was removed from the collection that constrained it.
+            </summary>
+        </member>
+        <member name="T:Visogram.Framework.Utils.UniqueListItemName`1">
+            <remarks>Renaming is threadsafe</remarks>
+        </member>
+        <member name="M:Visogram.Framework.TypeManager.SetAlias(System.String,System.Type)">
+            <summary>
+            Sets an <paramref name="alias"/> for the specified <paramref name="type"/>
+            </summary>
+            <param name="alias"></param>
+            <param name="type"></param>
+        </member>
+        <member name="M:Visogram.Framework.TypeManager.Resolve(System.String)">
+            <summary>
+            Resolves a <paramref name="typeName"/> into the corresponding type.
+            Lookups are done against the following sources (in that order)
+            <list type="number">
+            <item>Type aliases dictionary</item>
+            <item>VSSignalFramework assembly and mscorlib</item>
+            <item>Types loaded from plugins</item>
+            </list>
+            </summary>
+            <param name="typeName">The type name as a string. For nested types, you need to provide the full CLS name like so:
+            <value>"System.Collections.IList´1[[System.String]]"</value>, but normally the full name (type name including namespace) is sufficient.
+            You may optionally provide the assembly if the type is not located in one of the sources listed in the description.
+            It could look like the following: <value>"System.Data.IDbConnection, IDbConnection"</value></param>
+            <returns>The type that the <paramref name="typeName"/> represents if found, null otherwise</returns>
+        </member>
+    </members>
+</doc>

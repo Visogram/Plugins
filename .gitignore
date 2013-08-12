@@ -10,7 +10,8 @@ TestResults
 
 # User-specific files
 *.suo
-*.user
+# allowed for now:
+#*.user
 *.sln.docstates
 
 # Build results
